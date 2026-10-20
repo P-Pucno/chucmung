@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chúc Mừng Ngày Phụ Nữ Việt Nam 20/10</title>
   
-  <!-- Nhúng các bộ font tiếng Việt nghệ thuật đa dạng -->
+  <!-- Các bộ font tiếng Việt nghệ thuật đa dạng -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,500;0,700;1,500&family=Caveat:wght@600;700&family=Comfortaa:wght@600;700&family=Dancing+Script:wght@600;700&family=Pacifico&family=Playfair+Display:ital,wght@0,600;1,600&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
@@ -30,7 +30,7 @@
       position: relative;
     }
 
-    /* Khung trang trí viền hoa quanh 4 góc */
+    /* Viền hoa quanh 4 góc */
     .flower-frame {
       position: fixed;
       pointer-events: none;
@@ -119,12 +119,12 @@
       z-index: 999;
     }
 
-    /* Khung thẻ chính (Glassmorphism) */
+    /* Khung thẻ chính */
     .card {
       background: rgba(255, 255, 255, 0.9);
       border-radius: 28px;
       padding: 32px 24px;
-      max-width: 460px;
+      max-width: 470px;
       width: 100%;
       text-align: center;
       box-shadow: 
@@ -168,12 +168,18 @@
       text-align: left;
     }
     .input-box label {
-      display: block;
-      font-size: 13px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 13.5px;
       font-weight: 700;
       color: #ad1457;
       margin-bottom: 6px;
-      padding-left: 4px;
+      padding-left: 6px;
+    }
+    .heart-sub {
+      color: #e91e63;
+      font-size: 15px;
     }
     .recipient-input {
       width: 100%;
@@ -226,8 +232,8 @@
       background: rgba(255, 248, 249, 0.92);
       border: 1.5px dashed #f48fb1;
       border-radius: 18px;
-      padding: 20px 16px;
-      min-height: 135px;
+      padding: 22px 18px;
+      min-height: 140px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -237,16 +243,15 @@
     }
     .recipient-tag {
       display: inline-block;
-      font-size: 12px;
+      font-size: 12.5px;
       font-weight: 700;
       color: #c2185b;
       background: #fce4ec;
-      padding: 3px 12px;
-      border-radius: 10px;
+      padding: 4px 14px;
+      border-radius: 12px;
       margin-bottom: 10px;
     }
     
-    /* Vùng hiển thị chữ chúc mừng (font sẽ thay đổi ngẫu nhiên tại đây) */
     .wish-text {
       color: #222;
       font-size: 17px;
@@ -375,15 +380,18 @@
     <div id="toast" class="toast">✨ Đã sao chép lời chúc!</div>
     <span class="badge">✦ 20/10 Yêu Thương ✦</span>
     <h1>Hộp Quà Lời Chúc</h1>
-    <p class="sub-title">Nhập tên người bạn muốn gửi và bấm rút lời chúc may mắn!</p>
+    <p class="sub-title">Nhập tên của bạn để mở những điều bất ngờ ngọt ngào nhất!</p>
 
+    <!-- Ô nhập tên -->
     <div class="input-box">
-      <label for="recipientInput">Tên của bạn <3 ?</label>
+      <label for="recipientInput">
+        Tên của bạn <span class="heart-sub">&lt;3</span>
+      </label>
       <input 
         type="text" 
         id="recipientInput" 
         class="recipient-input" 
-        placeholder="Ví dụ: Mẹ yêu, Bé Thảo, Cô giáo..." 
+        placeholder="Nhập tên đáng yêu của bạn vào đây..." 
         value="Bạn" 
         oninput="updateRecipient()" 
         autocomplete="off"
@@ -395,8 +403,8 @@
     </div>
 
     <div class="message-box">
-      <span id="recipientTag" class="recipient-tag">💌 Gửi tặng: Bạn</span>
-      <p id="wish" class="wish-text">Nhấn nút bên dưới để rút lời chúc ngẫu nhiên dành riêng cho người ấy!</p>
+      <span id="recipientTag" class="recipient-tag">💌 Dành riêng cho: Bạn</span>
+      <p id="wish" class="wish-text">Nhấn nút bên dưới để rút lời chúc ngẫu nhiên dành riêng cho bạn nhé!</p>
       <span id="fontBadge" class="font-badge"></span>
     </div>
 
@@ -407,7 +415,6 @@
   </div>
 
   <script>
-    // Danh sách các bộ font chữ nghệ thuật tiếng Việt
     const fontStyles = [
       { name: "Dancing Script", family: "'Dancing Script', cursive", size: "20px", weight: "700" },
       { name: "Pacifico", family: "'Pacifico', cursive", size: "17px", weight: "400" },
@@ -417,15 +424,49 @@
       { name: "Be Vietnam Pro", family: "'Be Vietnam Pro', sans-serif", size: "15.5px", weight: "600" }
     ];
 
+    // Kho hơn 30 lời chúc phong phú, đầy đủ cung bậc cảm xúc
     const wishList = [
+      // Nhóm Ngọt Ngào & Tình Cảm
       "Nhân ngày 20/10, chúc {name} luôn rạng rỡ như ánh ban mai, ngập tràn niềm vui và nhận được thật nhiều tình cảm ấm áp! 🌸",
-      "Chúc {name} một ngày 20/10 trọn vẹn: Tiền vào ào ào, việc nhẹ lương cao, ăn hoài không béo và lúc nào cũng xinh đẹp! 💖",
       "Chúc {name} không chỉ riêng ngày 20/10 mà cả 365 ngày trong năm đều được yêu thương, chở che và bình an trong từng khoảnh khắc.",
-      "Chúc {name} luôn tự tin vào bản thân, gặt hái thêm nhiều thành công rực rỡ và luôn là niềm tự hào của những người yêu thương {name}! ✨",
-      "20/10 chúc {name} cười tươi như hoa nở mùa xuân, mắt biếc long lanh, ví dày cộm và bão giông cuộc đời dừng sau cánh cửa! 🌷",
-      "Nhiệm vụ duy nhất của {name} hôm nay là nghỉ ngơi, thật xinh đẹp và đón nhận những điều ngọt ngào nhất. Chúc mừng 20/10! 💐",
-      "Chúc {name} luôn tràn đầy năng lượng tích cực, công việc thuận lợi, tình duyên như ý và hạnh phúc vẹn toàn! 🍀",
-      "Gửi tới {name} ngàn đóa hoa và những lời chúc tốt đẹp nhất: Mong {name} luôn được nâng niu, trân trọng mỗi ngày! 🎁"
+      "Gửi tới {name} ngàn đóa hồng và những lời chúc tốt đẹp nhất: Mong {name} luôn được nâng niu, trân trọng mỗi ngày! 💐",
+      "Chúc {name} một đời bình an, sớm ngắm hoa nở, chiều đón hoàng hôn, bên cạnh luôn có người thấu hiểu và cưng chiều. 🌷",
+      "Thế giới này nhờ có sự dịu dàng của {name} mà trở nên ấm áp hơn rất nhiều. Chúc mừng ngày Phụ nữ Việt Nam 20/10! ✨",
+      "Mong cho những mong ước nhỏ bé của {name} đều trở thành hiện thực, mỗi ngày thức dậy đều là một ngày ngập tràn niềm vui! 💖",
+      "Chúc {name} luôn giữ được ánh mắt long lanh và nụ cười ngọt ngào như những ngày đầu tiên. Bạn xứng đáng với tất cả sự nâng niu trên đời! 🎀",
+
+      // Nhóm Hài Hước & Đáng Yêu
+      "Chúc {name} một ngày 20/10 trọn vẹn: Tiền vào ào ào, việc nhẹ lương cao, ăn hoài không béo và lúc nào cũng xinh đẹp! 🥳",
+      "Chúc {name} hôm nay: Quà ngập nhà, hoa ngập phòng, điện thoại ting ting tiền về liên tục và người yêu ngoan như cún! 💸",
+      "Nhiệm vụ duy nhất của {name} hôm nay là nghỉ ngơi, thật xinh đẹp và đón nhận những điều ngọt ngào nhất. Việc khó cứ để vũ trụ lo! 👑",
+      "Chúc {name} da trắng dáng xinh, ăn uống thả ga không lo mỡ bụng, ví luôn rủng rỉnh và shopping không cần nhìn giá! 🛍️",
+      "20/10 chúc {name} nhận được nhiều hoa, nhiều quà, và đặc biệt là nhận được sự yêu thương vô điều kiện từ người ấy nhé! 🎁",
+      "Chúc mừng 20/10! Chúc {name} deadline tự tan biến, sếp tâm lý thưởng dày, và mỗi sáng thức dậy không cần phải đặt chuông báo thức! ⏰",
+
+      // Nhóm Truyền Cảm Hứng & Tự Tin
+      "Chúc {name} luôn tự tin vào bản thân, gặt hái thêm nhiều thành công rực rỡ và luôn là phiên bản tỏa sáng rực rỡ nhất của chính mình! ⭐",
+      "Hãy luôn kiêu hãnh như một đóa hồng, xinh đẹp độc lập và mạnh mẽ bước đi trên con đường {name} đã chọn. Chúc mừng 20/10! 🌹",
+      "Chúc {name} luôn vững vàng trước mọi sóng gió, giữ trọn niềm đam mê và chạm tới mọi đỉnh cao mà bản thân hằng mơ ước! 🚀",
+      "Không cần phải là bông hoa rực rỡ nhất khu vườn, {name} hãy cứ là đóa hoa mang hương sắc độc nhất và hạnh phúc nhất nhé! 🌼",
+      "Chúc {name} luôn có đủ dũng khí để theo đuổi ước mơ, đủ bao dung để yêu thương và đủ bình yên để trân trọng hiện tại! 🍃",
+
+      // Nhóm Thơ Vui & Vần Điệu
+      "20 tháng 10 rộn ràng,\nChúc cho {name} mãi dịu dàng đoan trang,\nTiền vô như nước đò ngang,\nHạnh phúc ngập tràn rạng rỡ như hoa! 📜🌸",
+      "Hoa hồng có gai nhưng em thì không,\nChúc {name} má đỏ môi hồng,\nĐường tình như ý, đường tiền mênh mông! ✨💖",
+      "Hôm nay hai mươi tháng mười,\nChúc {name} xinh đẹp nụ cười trên môi,\nBao nhiêu muộn phiền cuốn trôi,\nChỉ còn niềm vui ở lại bên người! 🌷",
+
+      // Nhóm Công Việc, May Mắn & Tài Lộc
+      "20/10 chúc {name} cười tươi như hoa nở mùa xuân, mắt biếc long lanh, ví dày cộm và bão giông cuộc đời dừng sau cánh cửa! 🍀",
+      "Chúc {name} luôn tràn đầy năng lượng tích cực, công việc thuận buồm xuôi gió, tình duyên như ý và vạn sự hanh thông! 💼",
+      "Chúc người phụ nữ tài giỏi {name} luôn tìm thấy niềm hứng khởi mỗi ngày, gặp đối tác đáng tin, đồng nghiệp dễ thương và chốt deal lia lịa! 📈",
+      "Mong may mắn sẽ luôn mỉm cười với {name}, mỗi bước đi đều có hoa thơm dẫn lối và mỗi đích đến đều là hạnh phúc viên mãn! 🌈",
+      "Gửi ngàn lời chúc an lành tới {name}: Sức khỏe dồi dào, trí tuệ minh mẫn, tâm hồn an yên và túi tiền rủng rỉnh! 💰",
+
+      // Nhóm Sâu Lắng & Chân Thành
+      "Cảm ơn vì {name} đã xuất hiện và mang đến nguồn năng lượng tươi sáng cho những người xung quanh. Chúc bạn có một ngày 20/10 thật trọn vẹn! 💌",
+      "Mong {name} sẽ gặp được người biết lắng nghe những điều vụn vặt nhất của bạn, và luôn coi nụ cười của {name} là điều quan trọng nhất trần đời! 🌙",
+      "Chúc {name} một đời được yêu thương đúng cách, không phải gồng mình mạnh mẽ, luôn được dịu dàng ôm ấp sau những ngày mỏi mệt! 🕊️",
+      "Ngày 20/10 hôm nay, hãy tự thưởng cho mình một ly trà ngon, một bữa ăn ấm và một nụ cười thật tươi nhé {name}! ☕"
     ];
 
     let lastWishIndex = -1;
@@ -454,7 +495,6 @@
       lastFontIndex = fIndex;
       const font = fontStyles[fIndex];
 
-      // Áp dụng font ngẫu nhiên
       wishElem.style.fontFamily = font.family;
       wishElem.style.fontSize = font.size;
       wishElem.style.fontWeight = font.weight;
@@ -467,7 +507,7 @@
 
     function updateRecipient() {
       const name = getName();
-      document.getElementById('recipientTag').innerText = "💌 Gửi tặng: " + name;
+      document.getElementById('recipientTag').innerText = "💌 Dành riêng cho: " + name;
       if (currentRawWish) {
         document.getElementById('wish').innerText = formatText(currentRawWish, name);
       }
@@ -505,108 +545,4 @@
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       for (let i = particles.length - 1; i >= 0; i--) {
         const p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vy += 0.35;
-        p.alpha -= 0.012;
-        p.rot += 4;
-
-        ctx.save();
-        ctx.globalAlpha = Math.max(0, p.alpha);
-        ctx.translate(p.x, p.y);
-        ctx.rotate((p.rot * Math.PI) / 180);
-        ctx.fillStyle = p.color;
-        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
-        ctx.restore();
-
-        if (p.alpha <= 0 || p.y > canvas.height) {
-          particles.splice(i, 1);
-        }
-      }
-      requestAnimationFrame(animateConfetti);
-    }
-    animateConfetti();
-
-    // Rút quẻ ngẫu nhiên kèm đổi font
-    function drawWish() {
-      const gift = document.getElementById('gift');
-      const wishElem = document.getElementById('wish');
-
-      gift.classList.remove('shake');
-      void gift.offsetWidth;
-      gift.classList.add('shake');
-
-      wishElem.style.opacity = '0';
-      wishElem.style.transform = 'scale(0.96)';
-
-      setTimeout(() => {
-        let index;
-        do {
-          index = Math.floor(Math.random() * wishList.length);
-        } while (index === lastWishIndex && wishList.length > 1);
-
-        lastWishIndex = index;
-        currentRawWish = wishList[index];
-
-        const name = getName();
-        wishElem.innerText = formatText(currentRawWish, name);
-        document.getElementById('recipientTag').innerText = "💌 Gửi tặng: " + name;
-        
-        // Đổi ngẫu nhiên font chữ
-        applyRandomFont();
-
-        wishElem.style.opacity = '1';
-        wishElem.style.transform = 'scale(1)';
-
-        fireConfetti();
-      }, 180);
-    }
-
-    // Sao chép lời chúc
-    function copyWish() {
-      const text = document.getElementById('wish').innerText;
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(showToast);
-      } else {
-        const temp = document.createElement("textarea");
-        temp.value = text;
-        document.body.appendChild(temp);
-        temp.select();
-        document.execCommand('copy');
-        document.body.removeChild(temp);
-        showToast();
-      }
-    }
-
-    function showToast() {
-      const toast = document.getElementById('toast');
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 2000);
-    }
-
-    document.getElementById('recipientInput').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') {
-        drawWish();
-      }
-    });
-
-    // Cánh hoa rơi
-    function createPetal() {
-      const petal = document.createElement('div');
-      petal.className = 'petal';
-      petal.innerText = ['🌸', '✨', '💐', '🌷', '💖', '❤️'][Math.floor(Math.random() * 6)];
-      petal.style.left = Math.random() * 100 + 'vw';
-      petal.style.fontSize = (Math.random() * 8 + 14) + 'px';
-      petal.style.animationDuration = (Math.random() * 4 + 5) + 's';
-      petal.style.opacity = Math.random() * 0.7 + 0.3;
-      document.body.appendChild(petal);
-
-      setTimeout(() => petal.remove(), 8000);
-    }
-    for (let i = 0; i < 10; i++) {
-      setTimeout(createPetal, Math.random() * 4000);
-    }
-    setInterval(createPetal, 450);
-  </script>
-</body>
-</html>
+        p.
