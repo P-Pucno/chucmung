@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rút Lời Chúc 20/10</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  <!-- Thư viện hiệu ứng pháo hoa -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Quicksand', sans-serif;
+    }
+    body {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #ffeef2 0%, #ffd6e0 50%, #fed0dc 100%);
+      padding: 20px;
+      overflow-x: hidden;
+    }
+    .fortune-box {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 28px;
+      padding: 36px 24px;
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(233, 30, 99, 0.15);
+      border: 2px solid #ffccd5;
+      position: relative;
+    }
+    .tag {
+      display: inline-block;
+      background: #ffe3ea;
+      color: #e91e63;
+      padding: 6px 16px;
+      border-radius: 30px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    h2 {
+      font-size: 26px;
+      color: #b8004f;
+      margin-bottom: 8px;
+    }
+    .sub {
+      color: #777;
+      font-size: 14px;
+      margin-bottom: 20px;
+    }
+    .input-wrapper {
+      margin: 0 auto 16px auto;
+      max-width: 360px;
+      text-align: left;
+    }
+    .input-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 700;
+      color: #ad1457;
+      margin-bottom: 6px;
+      padding-left: 6px;
+    }
+    .recipient-input {
+      width: 100%;
+      padding: 12px 18px;
+      font-size: 15px;
+      border: 2px solid #f8bbd0;
+      border-radius: 50px;
+      outline: none;
+      transition: all 0.3s;
+      background: #fffafb;
+      color: #333;
+      font-weight: 600;
+    }
+    .recipient-input:focus {
+      border-color: #e91e63;
+      background: #ffffff;
+      box-shadow: 0 0 12px rgba(233, 30, 99, 0.2);
+    }
+    .gift-btn-container {
+      margin: 10px 0;
+      position: relative;
+    }
+    .gift-icon {
+      font-size: 64px;
+      display: inline-block;
+      cursor: pointer;
+      transition: transform 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      user-select: none;
+      filter: drop-shadow(0 8px 16px rgba(233, 30, 99, 0.25));
+    }
+    .gift-icon:hover {
+      transform: scale(1.15) rotate(5deg);
+    }
+    .gift-icon.shake {
+      animation: shake 0.6s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+    }
+    @keyframes shake {
+      10%, 90% { transform: translate3d(-2px, 0, 0) rotate(-4deg); }
+      20%, 80% { transform: translate3d(3px, 0, 0) rotate(4deg); }
+      30%, 50%, 70% { transform: translate3d(-5px, 0, 0) rotate(-6deg); }
+      40%, 60% { transform: translate3d(5px, 0, 0) rotate(6deg); }
+    }
+    .message-card {
+      min-height: 140px;
+      background: #fffafb;
+      border: 1.5px dashed #f48fb1;
+      border-radius: 20px;
+      padding: 20px 18px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      margin: 16px 0;
+      position: relative;
+    }
+    .recipient-tag {
+      font-size: 13px;
+      font-weight: 700;
+      color: #d81b60;
+      background: #fce4ec;
+      padding: 4px 14px;
+      border-radius: 12px;
+      margin-bottom: 10px;
+    }
+    .wish-text {
+      color: #333;
+      font-size: 16px;
+      line-height: 1.6;
+      font-weight: 600;
+      opacity: 1;
+      transition: opacity 0.2s ease;
+    }
+    .actions {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      border: none;
+      padding: 12px 24px;
+      font-size: 15px;
+      font-weight: 700;
+      border-radius: 50px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+    .btn-draw {
+      background: linear-gradient(45deg, #ff4081, #e91e63);
+      color: white;
+      box-shadow: 0 6px 18px rgba(233, 30, 99, 0.35);
+    }
+    .btn-draw:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(233, 30, 99, 0.5);
+    }
+    .btn-copy {
+      background: #f8bbd0;
+      color: #880e4f;
+    }
+    .btn-copy:hover {
+      background: #f48fb1;
+    }
+    .toast {
+      position: absolute;
+      top: 15px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: rgba(0, 0, 0, 0.85);
+      color: white;
+      padding: 7px 18px;
+      border-radius: 20px;
+      font-size: 13px;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.3s;
+      z-index: 99;
+    }
+    .toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+    }
+    /* Tim bay dự phòng nếu confetti không tải được */
+    .flying-heart {
+      position: fixed;
+      pointer-events: none;
+      user-select: none;
+      animation: flyHeart 1.5s forwards ease-out;
+      z-index: 1000;
+    }
+    @keyframes flyHeart {
+      0% { transform: translateY(0) scale(0.6); opacity: 1; }
+      100% { transform: translateY(-120px) scale(1.4); opacity: 0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="fortune-box">
+    <div id="toast" class="toast">Đã sao chép lời chúc! ✨</div>
+    <span class="tag">✦ 20/10 YÊU THƯƠNG ✦</span>
+    <h2>Hộp Quà Lời Chúc</h2>
+    <p class="sub">Nhập tên người bạn muốn gửi và bấm rút lời chúc may mắn!</p>
+
+    <div class="input-wrapper">
+      <label class="input-label" for="recipientInput">Gửi đến ai?</label>
+      <input 
+        type="text" 
+        id="recipientInput" 
+        class="recipient-input" 
+        placeholder="Ví dụ: Mẹ yêu, Em Thảo, Cô giáo..."
+        value="Bạn"
+        oninput="updatePreview()"
+      />
+    </div>
+
+    <div class="gift-btn-container">
+      <div id="gift" class="gift-icon" onclick="randomWish()">🎁</div>
+    </div>
+
+    <div class="message-card">
+      <div id="recipientTag" class="recipient-tag">💌 Gửi tặng: Bạn</div>
+      <div id="wish" class="wish-text">Nhấn nút bên dưới để rút lời chúc ngẫu nhiên dành riêng cho người ấy!</div>
+    </div>
+
+    <div class="actions">
+      <button type="button" class="btn btn-draw" onclick="randomWish()">🎲 Rút Quẻ Ngẫu Nhiên</button>
+      <button type="button" class="btn btn-copy" onclick="copyWish()">📋 Sao Chép</button>
+    </div>
+  </div>
+
+  <script>
+    const wishTemplates = [
+      "Nhân ngày 20/10, chúc {name} luôn rạng rỡ như ánh ban mai, ngập tràn niềm vui và nhận được thật nhiều tình cảm ấm áp từ mọi người xung quanh! 🌸",
+      "Chúc {name} một ngày 20/10 thật trọn vẹn: Tiền vào ào ào, việc nhẹ lương cao, ăn hoài không béo và lúc nào cũng xinh đẹp, trẻ trung! 💖",
+      "Chúc {name} không chỉ riêng ngày 20/10 mà cả 365 ngày trong năm đều được yêu thương, chở che và bình an trong từng khoảnh khắc.",
+      "Chúc {name} luôn tự tin vào bản thân, gặt hái thêm nhiều thành công rực rỡ và luôn là niềm tự hào của những người yêu quý {name}! ✨",
+      "20/10 chúc {name} cười tươi như hoa nở mùa xuân, mắt biếc long lanh, ví dày cộm và bão giông cuộc đời luôn dừng sau cánh cửa! 🌷",
+      "Nhiệm vụ duy nhất của {name} hôm nay là nghỉ ngơi, thật xinh đẹp và đón nhận những điều may mắn nhất. Chúc mừng 20/10! 💐",
+      "Chúc {name} luôn yêu đời, nhiệt huyết trong công việc, êm đềm trong cuộc sống và luôn giữ trọn nguồn năng lượng tích cực này nhé! 🍀",
+      "Gửi tới {name} ngàn đóa hồng và những lời chúc tốt đẹp nhất: Mong {name} luôn được nâng niu, trân trọng và hạnh phúc mỗi ngày! 🎁"
+    ];
+
+    let lastIndex = -1;
+    let currentRawTemplate = "";
+
+    function getName() {
+      const input = document.getElementById('recipientInput');
+      const val = input ? input.value.trim() : "";
+      return val !== "" ? val : "Bạn";
+    }
+
+    function formatWish(template, name) {
+      return template.replace(/\{name\}/g, name);
+    }
+
+    function updatePreview() {
+      const name = getName();
+      const tag = document.getElementById('recipientTag');
+      if (tag) tag.innerText = "💌 Gửi tặng: " + name;
+
+      if (currentRawTemplate) {
+        const wishElem = document.getElementById('wish');
+        if (wishElem) wishElem.innerText = formatWish(currentRawTemplate, name);
+      }
+    }
+
+    function triggerConfetti() {
+      try {
+        if (typeof confetti === 'function') {
+          confetti({
+            particleCount: 40,
+            spread: 60,
+            origin: { y: 0.7 },
+            colors: ['#ff4081', '#ff80ab', '#f50057', '#ffd54f']
+          });
+        }
+      } catch (e) {
+        // Dự phòng nếu CDN confetti bị chặn
+        const heart = document.createElement('div');
+        heart.className = 'flying-heart';
+        heart.innerText = '💖';
+        heart.style.left = '50%';
+        heart.style.top = '50%';
+        heart.style.fontSize = '30px';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 1500);
+      }
+    }
+
+    function randomWish() {
+      const gift = document.getElementById('gift');
+      const wishElem = document.getElementById('wish');
+      const tag = document.getElementById('recipientTag');
+
+      if (gift) {
+        gift.classList.remove('shake');
+        void gift.offsetWidth; // Buộc reflow để kích hoạt lại animation
+        gift.classList.add('shake');
+      }
+
+      if (wishElem) {
+        wishElem.style.opacity = '0';
+      }
+
+      setTimeout(() => {
+        let index;
+        do {
+          index = Math.floor(Math.random() * wishTemplates.length);
+        } while (index === lastIndex && wishTemplates.length > 1);
+
+        lastIndex = index;
+        currentRawTemplate = wishTemplates[index];
+
+        const name = getName();
+        if (tag) tag.innerText = "💌 Gửi tặng: " + name;
+        if (wishElem) {
+          wishElem.innerText = formatWish(currentRawTemplate, name);
+          wishElem.style.opacity = '1';
+        }
+
+        triggerConfetti();
+      }, 200);
+    }
+
+    function copyWish() {
+      const wishElem = document.getElementById('wish');
+      if (!wishElem) return;
+      const text = wishElem.innerText;
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(showToast);
+      } else {
+        // Hỗ trợ dự phòng cho thiết bị cũ
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        showToast();
+      }
+    }
+
+    function showToast() {
+      const toast = document.getElementById('toast');
+      if (toast) {
+        toast.classList.add('show');
+        setTimeout(() => toast.classList.remove('show'), 2000);
+      }
+    }
+
+    // Hỗ trợ gõ xong nhấn Enter
+    const recipientInput = document.getElementById('recipientInput');
+    if (recipientInput) {
+      recipientInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          randomWish();
+        }
+      });
+    }
+  </script>
+</body>
+</html>
