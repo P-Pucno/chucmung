@@ -545,4 +545,106 @@
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       for (let i = particles.length - 1; i >= 0; i--) {
         const p = particles[i];
-        p.
+        p.x += p.vx;
+        p.y += p.vy;
+        p.vy += 0.35;
+        p.alpha -= 0.012;
+        p.rot += 4;
+
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, p.alpha);
+        ctx.translate(p.x, p.y);
+        ctx.rotate((p.rot * Math.PI) / 180);
+        ctx.fillStyle = p.color;
+        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+        ctx.restore();
+
+        if (p.alpha <= 0 || p.y > canvas.height) {
+          particles.splice(i, 1);
+        }
+      }
+      requestAnimationFrame(animateConfetti);
+    }
+    animateConfetti();
+
+    // Rút quẻ ngẫu nhiên kèm đổi font
+    function drawWish() {
+      const gift = document.getElementById('gift');
+      const wishElem = document.getElementById('wish');
+
+      gift.classList.remove('shake');
+      void gift.offsetWidth;
+      gift.classList.add('shake');
+
+      wishElem.style.opacity = '0';
+      wishElem.style.transform = 'scale(0.96)';
+
+      setTimeout(() => {
+        let index;
+        do {
+          index = Math.floor(Math.random() * wishList.length);
+        } while (index === lastWishIndex && wishList.length > 1);
+
+        lastWishIndex = index;
+        currentRawWish = wishList[index];
+
+        const name = getName();
+        wishElem.innerText = formatText(currentRawWish, name);
+        document.getElementById('recipientTag').innerText = "💌 Dành riêng cho: " + name;
+        
+        applyRandomFont();
+
+        wishElem.style.opacity = '1';
+        wishElem.style.transform = 'scale(1)';
+
+        fireConfetti();
+      }, 180);
+    }
+
+    function copyWish() {
+      const text = document.getElementById('wish').innerText;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(showToast);
+      } else {
+        const temp = document.createElement("textarea");
+        temp.value = text;
+        document.body.appendChild(temp);
+        temp.select();
+        document.execCommand('copy');
+        document.body.removeChild(temp);
+        showToast();
+      }
+    }
+
+    function showToast() {
+      const toast = document.getElementById('toast');
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2000);
+    }
+
+    document.getElementById('recipientInput').addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        drawWish();
+      }
+    });
+
+    // Cánh hoa rơi
+    function createPetal() {
+      const petal = document.createElement('div');
+      petal.className = 'petal';
+      petal.innerText = ['🌸', '✨', '💐', '🌷', '💖', '❤️'][Math.floor(Math.random() * 6)];
+      petal.style.left = Math.random() * 100 + 'vw';
+      petal.style.fontSize = (Math.random() * 8 + 14) + 'px';
+      petal.style.animationDuration = (Math.random() * 4 + 5) + 's';
+      petal.style.opacity = Math.random() * 0.7 + 0.3;
+      document.body.appendChild(petal);
+
+      setTimeout(() => petal.remove(), 8000);
+    }
+    for (let i = 0; i < 10; i++) {
+      setTimeout(createPetal, Math.random() * 4000);
+    }
+    setInterval(createPetal, 450);
+  </script>
+</body>
+</html>
