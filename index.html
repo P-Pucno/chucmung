@@ -19,56 +19,55 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      /* Background hoa lá nghệ thuật kết hợp cùng dải lấp lánh và bokeh */
-      background: 
-        radial-gradient(circle at 10% 20%, rgba(255, 182, 193, 0.4) 0%, transparent 50%),
-        radial-gradient(circle at 90% 80%, rgba(255, 105, 180, 0.3) 0%, transparent 50%),
-        linear-gradient(135deg, #ffeef2 0%, #ffd4e0 50%, #fec5d5 100%);
-      background-size: cover;
+      /* Nền hồng phấn mềm mại */
+      background: radial-gradient(circle at center, #fff1f5 0%, #ffdbe4 60%, #fec8d8 100%);
       padding: 16px;
       overflow-x: hidden;
       position: relative;
     }
 
-    /* Các cụm hoa trang trí góc nền (Sử dụng CSS để vẽ mềm mại, không lo lỗi ảnh) */
-    body::before, body::after {
-      content: "";
+    /* Khung trang trí hình hoa quanh 4 góc */
+    .flower-frame {
       position: fixed;
       pointer-events: none;
-      z-index: 1;
-      opacity: 0.85;
-      background-repeat: no-repeat;
-      filter: blur(0.5px);
-    }
-    /* Hoa góc trên bên trái */
-    body::before {
-      top: -20px;
-      left: -20px;
-      width: 320px;
-      height: 320px;
-      background-image: 
-        radial-gradient(circle at 30% 30%, #ff8da1 0%, transparent 40%),
-        radial-gradient(circle at 50% 20%, #ffb6c1 0%, transparent 35%),
-        radial-gradient(circle at 20% 50%, #ffa3b1 0%, transparent 45%),
-        radial-gradient(circle at 50% 50%, #ff4d6d 0%, transparent 30%);
-      border-radius: 50%;
-      filter: blur(15px);
-    }
-    /* Hoa góc dưới bên phải */
-    body::after {
-      bottom: -40px;
-      right: -40px;
-      width: 350px;
-      height: 350px;
-      background-image: 
-        radial-gradient(circle at 70% 70%, #ff4d6d 0%, transparent 45%),
-        radial-gradient(circle at 50% 80%, #ff8da1 0%, transparent 40%),
-        radial-gradient(circle at 80% 50%, #ffb6c1 0%, transparent 35%);
-      border-radius: 50%;
-      filter: blur(20px);
+      z-index: 2;
+      opacity: 0.92;
+      filter: drop-shadow(0 6px 14px rgba(233, 30, 99, 0.18));
+      transition: transform 0.3s ease;
     }
 
-    /* Hiệu ứng dải lấp lánh (Sparkles & Bokeh) bay nhẹ */
+    /* Cụm hoa góc trên bên trái */
+    .flower-tl {
+      top: -20px;
+      left: -20px;
+      width: clamp(220px, 30vw, 380px);
+    }
+
+    /* Cụm hoa góc dưới bên phải */
+    .flower-br {
+      bottom: -20px;
+      right: -20px;
+      width: clamp(240px, 32vw, 400px);
+      transform: rotate(180deg);
+    }
+
+    /* Cụm hoa góc trên bên phải */
+    .flower-tr {
+      top: -15px;
+      right: -15px;
+      width: clamp(170px, 22vw, 280px);
+      transform: scaleX(-1);
+    }
+
+    /* Cụm hoa góc dưới bên trái */
+    .flower-bl {
+      bottom: -15px;
+      left: -15px;
+      width: clamp(170px, 22vw, 280px);
+      transform: scaleY(-1);
+    }
+
+    /* Dải hạt lấp lánh ánh kim */
     .sparkle-bg {
       position: fixed;
       top: 0;
@@ -76,30 +75,28 @@
       width: 100vw;
       height: 100vh;
       pointer-events: none;
-      z-index: 2;
+      z-index: 1;
       background-image: 
-        radial-gradient(2px 2px at 20px 30px, #fff, rgba(0,0,0,0)),
-        radial-gradient(3px 3px at 40px 70px, #fff3a8, rgba(0,0,0,0)),
-        radial-gradient(2px 2px at 50px 160px, #fff, rgba(0,0,0,0)),
-        radial-gradient(3px 3px at 80px 120px, #ffccd5, rgba(0,0,0,0)),
-        radial-gradient(4px 4px at 150px 200px, #fff3a8, rgba(0,0,0,0)),
-        radial-gradient(2.5px 2.5px at 250px 50px, #fff, rgba(0,0,0,0)),
-        radial-gradient(3.5px 3.5px at 300px 300px, #ffecb3, rgba(0,0,0,0));
-      background-repeat: repeat;
-      background-size: 400px 400px;
+        radial-gradient(2px 2px at 15% 20%, #fff, transparent),
+        radial-gradient(3px 3px at 85% 25%, #ffeb3b, transparent),
+        radial-gradient(2.5px 2.5px at 20% 80%, #ffd54f, transparent),
+        radial-gradient(3px 3px at 80% 85%, #fff, transparent),
+        radial-gradient(2px 2px at 50% 15%, #ff80ab, transparent),
+        radial-gradient(4px 4px at 50% 90%, #ffe082, transparent);
+      background-size: 350px 350px;
       opacity: 0.75;
-      animation: glitter 12s linear infinite;
-    }
-    @keyframes glitter {
-      0% { transform: translateY(0) rotate(0deg); }
-      50% { transform: translateY(-30px) rotate(3deg); opacity: 0.9; }
-      100% { transform: translateY(0) rotate(0deg); }
+      animation: sparkleAnim 6s ease-in-out infinite alternate;
     }
 
-    /* Cánh hoa và tim bay lãng mạn */
+    @keyframes sparkleAnim {
+      0% { opacity: 0.45; transform: scale(0.98); }
+      100% { opacity: 0.85; transform: scale(1.02); }
+    }
+
+    /* Cánh hoa & icon rơi tự do */
     .petal {
       position: fixed;
-      top: -20px;
+      top: -25px;
       pointer-events: none;
       user-select: none;
       z-index: 3;
@@ -107,7 +104,7 @@
     }
     @keyframes fall {
       to {
-        transform: translateY(105vh) translateX(100px) rotate(360deg);
+        transform: translateY(105vh) translateX(80px) rotate(360deg);
       }
     }
 
@@ -122,22 +119,22 @@
       z-index: 999;
     }
 
-    /* Khung thiệp chính - Thủy tinh mờ (Glassmorphism) */
+    /* Khung thẻ chính - Kính mờ cao cấp */
     .card {
       background: rgba(255, 255, 255, 0.88);
       border-radius: 28px;
       padding: 32px 24px;
-      max-width: 460px;
+      max-width: 450px;
       width: 100%;
       text-align: center;
       box-shadow: 
-        0 15px 40px rgba(233, 30, 99, 0.18),
-        0 0 0 1px rgba(255, 255, 255, 0.5) inset;
-      border: 1.5px solid rgba(255, 192, 203, 0.6);
+        0 18px 45px rgba(233, 30, 99, 0.16),
+        0 0 0 1px rgba(255, 255, 255, 0.7) inset;
+      border: 1.5px solid rgba(255, 204, 213, 0.8);
       position: relative;
       z-index: 10;
-      backdrop-filter: blur(15px);
-      -webkit-backdrop-filter: blur(15px);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
     }
 
     .badge {
@@ -155,10 +152,9 @@
 
     h1 {
       font-size: 25px;
-      color: #b8004f;
+      color: #ad1457;
       margin-bottom: 6px;
       font-weight: 700;
-      text-shadow: 0 1px 1px rgba(0,0,0,0.05);
     }
 
     .sub-title {
@@ -167,7 +163,7 @@
       margin-bottom: 18px;
     }
 
-    /* Ô nhập tên */
+    /* Ô nhập tên người nhận */
     .input-box {
       margin-bottom: 16px;
       text-align: left;
@@ -187,7 +183,7 @@
       border: 1.8px solid #f8bbd0;
       border-radius: 50px;
       outline: none;
-      background: rgba(255, 250, 251, 0.9);
+      background: rgba(255, 250, 251, 0.95);
       color: #333;
       font-weight: 600;
       transition: all 0.25s;
@@ -198,7 +194,7 @@
       box-shadow: 0 0 12px rgba(233, 30, 99, 0.22);
     }
 
-    /* Biểu tượng hộp quà tương tác */
+    /* Hộp quà tương tác */
     .gift-wrap {
       margin: 6px 0 14px 0;
     }
@@ -221,316 +217,4 @@
     }
     @keyframes shake {
       10%, 90% { transform: translate3d(-2px, 0, 0) rotate(-4deg); }
-      20%, 80% { transform: translate3d(3px, 0, 0) rotate(4deg); }
-      30%, 50%, 70% { transform: translate3d(-5px, 0, 0) rotate(-6deg); }
-      40%, 60% { transform: translate3d(5px, 0, 0) rotate(6deg); }
-    }
-
-    /* Khung hiển thị lời chúc */
-    .message-box {
-      background: rgba(255, 248, 249, 0.85);
-      border: 1.5px dashed #f48fb1;
-      border-radius: 18px;
-      padding: 18px 16px;
-      min-height: 120px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      margin-bottom: 20px;
-    }
-    .recipient-tag {
-      display: inline-block;
-      font-size: 12px;
-      font-weight: 700;
-      color: #c2185b;
-      background: #fce4ec;
-      padding: 3px 12px;
-      border-radius: 10px;
-      margin-bottom: 8px;
-    }
-    .wish-text {
-      color: #222;
-      font-size: 16px;
-      line-height: 1.6;
-      font-weight: 600;
-      transition: opacity 0.2s ease;
-    }
-
-    /* Các nút hành động */
-    .actions {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-    }
-    .btn {
-      border: none;
-      padding: 11px 20px;
-      font-size: 14.5px;
-      font-weight: 700;
-      border-radius: 50px;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      transition: all 0.2s;
-    }
-    .btn-draw {
-      background: linear-gradient(45deg, #ff4081, #e91e63);
-      color: #fff;
-      box-shadow: 0 5px 16px rgba(233, 30, 99, 0.35);
-      flex: 1.3;
-      justify-content: center;
-    }
-    .btn-draw:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 20px rgba(233, 30, 99, 0.45);
-    }
-    .btn-copy {
-      background: #fce4ec;
-      color: #ad1457;
-      border: 1px solid #f8bbd0;
-      flex: 1;
-      justify-content: center;
-    }
-    .btn-copy:hover {
-      background: #f8bbd0;
-    }
-
-    /* Thông báo đã chép */
-    .toast {
-      position: absolute;
-      top: 14px;
-      left: 50%;
-      transform: translateX(-50%) translateY(-20px);
-      background: rgba(0, 0, 0, 0.85);
-      color: white;
-      padding: 6px 16px;
-      border-radius: 20px;
-      font-size: 12.5px;
-      opacity: 0;
-      pointer-events: none;
-      transition: all 0.3s;
-      z-index: 100;
-      white-space: nowrap;
-    }
-    .toast.show {
-      opacity: 1;
-      transform: translateX(-50%) translateY(0);
-    }
-  </style>
-</head>
-<body>
-
-  <!-- Phân tầng hiệu ứng nền dưới card -->
-  <div class="sparkle-bg"></div>
-  <canvas id="confettiCanvas"></canvas>
-
-  <!-- Khung card chính -->
-  <div class="card">
-    <div id="toast" class="toast">✨ Đã sao chép lời chúc!</div>
-    <span class="badge">✦ 20/10 Yêu Thương ✦</span>
-    <h1>Hộp Quà Lời Chúc</h1>
-    <p class="sub-title">Nhập tên người bạn muốn gửi và bấm rút lời chúc may mắn!</p>
-
-    <!-- Ô nhập tên -->
-    <div class="input-box">
-      <label for="recipientInput">Gửi đến ai?</label>
-      <input 
-        type="text" 
-        id="recipientInput" 
-        class="recipient-input" 
-        placeholder="Ví dụ: Mẹ yêu, Bé Thảo, Cô giáo..." 
-        value="Bạn" 
-        oninput="updateRecipient()" 
-        autocomplete="off"
-      />
-    </div>
-
-    <!-- Hộp quà tương tác -->
-    <div class="gift-wrap">
-      <span id="gift" class="gift-icon" onclick="drawWish()">🎁</span>
-    </div>
-
-    <!-- Khu vực hiển thị lời chúc -->
-    <div class="message-box">
-      <span id="recipientTag" class="recipient-tag">💌 Gửi tặng: Bạn</span>
-      <p id="wish" class="wish-text">Nhấn nút bên dưới để rút lời chúc ngẫu nhiên dành riêng cho người ấy!</p>
-    </div>
-
-    <!-- Nút bấm -->
-    <div class="actions">
-      <button type="button" class="btn btn-draw" onclick="drawWish()">🎲 Rút Quẻ Ngẫu Nhiên</button>
-      <button type="button" class="btn btn-copy" onclick="copyWish()">📋 Sao Chép</button>
-    </div>
-  </div>
-
-  <script>
-    // Kho lời chúc 20/10 phong phú
-    const wishList = [
-      "Nhân ngày 20/10, chúc {name} luôn rạng rỡ như ánh ban mai, ngập tràn niềm vui và nhận được thật nhiều tình cảm ấm áp! 🌸",
-      "Chúc {name} một ngày 20/10 trọn vẹn: Tiền vào ào ào, việc nhẹ lương cao, ăn hoài không béo và lúc nào cũng xinh đẹp! 💖",
-      "Chúc {name} không chỉ riêng ngày 20/10 mà cả 365 ngày trong năm đều được yêu thương, chở che và bình an trong từng khoảnh khắc.",
-      "Chúc {name} luôn tự tin vào bản thân, gặt hái thêm nhiều thành công rực rỡ và luôn là niềm tự hào của những người yêu thương {name}! ✨",
-      "20/10 chúc {name} cười tươi như hoa nở mùa xuân, mắt biếc long lanh, ví dày cộm và bão giông cuộc đời dừng sau cánh cửa! 🌷",
-      "Nhiệm vụ duy nhất của {name} hôm nay là nghỉ ngơi, thật xinh đẹp và đón nhận những điều ngọt ngào nhất. Chúc mừng 20/10! 💐",
-      "Chúc {name} luôn tràn đầy năng lượng tích cực, công việc thuận lợi, tình duyên như ý và hạnh phúc vẹn toàn! 🍀",
-      "Gửi tới {name} ngàn đóa hoa và những lời chúc tốt đẹp nhất: Mong {name} luôn được nâng niu, trân trọng mỗi ngày! 🎁"
-    ];
-
-    let lastIndex = -1;
-    let currentRawWish = "";
-
-    function getName() {
-      const input = document.getElementById('recipientInput');
-      const val = input ? input.value.trim() : "";
-      return val !== "" ? val : "Bạn";
-    }
-
-    function formatText(template, name) {
-      return template.split("{name}").join(name);
-    }
-
-    function updateRecipient() {
-      const name = getName();
-      document.getElementById('recipientTag').innerText = "💌 Gửi tặng: " + name;
-      if (currentRawWish) {
-        document.getElementById('wish').innerText = formatText(currentRawWish, name);
-      }
-    }
-
-    // Hiệu ứng pháo hoa tự vẽ bằng Canvas thuần
-    const canvas = document.getElementById('confettiCanvas');
-    const ctx = canvas.getContext('2d');
-    let particles = [];
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resizeCanvas);
-    resizeCanvas();
-
-    function fireConfetti() {
-      const colors = ['#ff4081', '#ff80ab', '#f50057', '#ffd54f', '#ff1744', '#b388ff', '#ffeb3b'];
-      for (let i = 0; i < 70; i++) {
-        particles.push({
-          x: canvas.width / 2,
-          y: canvas.height * 0.55,
-          vx: (Math.random() - 0.5) * 14,
-          vy: (Math.random() - 0.82) * 16,
-          size: Math.random() * 8 + 4,
-          color: colors[Math.floor(Math.random() * colors.length)],
-          alpha: 1,
-          rot: Math.random() * 360
-        });
-      }
-    }
-
-    function animateConfetti() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      for (let i = particles.length - 1; i >= 0; i--) {
-        const p = particles[i];
-        p.x += p.vx;
-        p.y += p.vy;
-        p.vy += 0.35; // Trọng lực rơi
-        p.alpha -= 0.012;
-        p.rot += 4;
-
-        ctx.save();
-        ctx.globalAlpha = Math.max(0, p.alpha);
-        ctx.translate(p.x, p.y);
-        ctx.rotate((p.rot * Math.PI) / 180);
-        ctx.fillStyle = p.color;
-        ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
-        ctx.restore();
-
-        if (p.alpha <= 0 || p.y > canvas.height) {
-          particles.splice(i, 1);
-        }
-      }
-      requestAnimationFrame(animateConfetti);
-    }
-    animateConfetti();
-
-    // Rút quẻ
-    function drawWish() {
-      const gift = document.getElementById('gift');
-      const wishElem = document.getElementById('wish');
-
-      // Hiệu ứng hộp quà nảy rung
-      gift.classList.remove('shake');
-      void gift.offsetWidth;
-      gift.classList.add('shake');
-
-      wishElem.style.opacity = '0';
-
-      setTimeout(() => {
-        let index;
-        do {
-          index = Math.floor(Math.random() * wishList.length);
-        } while (index === lastIndex && wishList.length > 1);
-
-        lastIndex = index;
-        currentRawWish = wishList[index];
-
-        const name = getName();
-        wishElem.innerText = formatText(currentRawWish, name);
-        document.getElementById('recipientTag').innerText = "💌 Gửi tặng: " + name;
-        wishElem.style.opacity = '1';
-
-        fireConfetti();
-      }, 180);
-    }
-
-    // Sao chép
-    function copyWish() {
-      const text = document.getElementById('wish').innerText;
-      if (navigator.clipboard && navigator.clipboard.writeText) {
-        navigator.clipboard.writeText(text).then(showToast);
-      } else {
-        const temp = document.createElement("textarea");
-        temp.value = text;
-        document.body.appendChild(temp);
-        temp.select();
-        document.execCommand('copy');
-        document.body.removeChild(temp);
-        showToast();
-      }
-    }
-
-    function showToast() {
-      const toast = document.getElementById('toast');
-      toast.classList.add('show');
-      setTimeout(() => toast.classList.remove('show'), 2000);
-    }
-
-    // Gõ phím Enter để kích hoạt bốc quẻ
-    document.getElementById('recipientInput').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') {
-        drawWish();
-      }
-    });
-
-    // Tạo các cánh hoa và tim rơi tự nhiên
-    function createPetal() {
-      const petal = document.createElement('div');
-      petal.className = 'petal';
-      petal.innerText = ['🌸', '✨', '💐', '🌷', '💖', '❤️'][Math.floor(Math.random() * 6)];
-      petal.style.left = Math.random() * 100 + 'vw';
-      petal.style.fontSize = (Math.random() * 8 + 14) + 'px';
-      // Tốc độ và khoảng lượn sóng ngẫu nhiên
-      petal.style.animationDuration = (Math.random() * 4 + 5) + 's';
-      petal.style.opacity = Math.random() * 0.7 + 0.3;
-      document.body.appendChild(petal);
-
-      setTimeout(() => petal.remove(), 8000);
-    }
-    // Khởi tạo các cánh hoa bay ban đầu
-    for (let i = 0; i < 10; i++) {
-      setTimeout(createPetal, Math.random() * 4000);
-    }
-    setInterval(createPetal, 450);
-  </script>
-</body>
-</html>
+      20%, 80% { transform: translate3d(3px,
