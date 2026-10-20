@@ -4,7 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chúc Mừng Ngày Phụ Nữ Việt Nam 20/10</title>
-  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- Nhúng các bộ font tiếng Việt nghệ thuật đa dạng -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,500;0,700;1,500&family=Caveat:wght@600;700&family=Comfortaa:wght@600;700&family=Dancing+Script:wght@600;700&family=Pacifico&family=Playfair+Display:ital,wght@0,600;1,600&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+
   <style>
     * {
       margin: 0;
@@ -19,14 +24,13 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      /* Nền hồng phấn mềm mại */
       background: radial-gradient(circle at center, #fff1f5 0%, #ffdbe4 60%, #fec8d8 100%);
       padding: 16px;
       overflow-x: hidden;
       position: relative;
     }
 
-    /* Khung trang trí hình hoa quanh 4 góc */
+    /* Khung trang trí viền hoa quanh 4 góc */
     .flower-frame {
       position: fixed;
       pointer-events: none;
@@ -36,14 +40,12 @@
       transition: transform 0.3s ease;
     }
 
-    /* Cụm hoa góc trên bên trái */
     .flower-tl {
       top: -20px;
       left: -20px;
       width: clamp(220px, 30vw, 380px);
     }
 
-    /* Cụm hoa góc dưới bên phải */
     .flower-br {
       bottom: -20px;
       right: -20px;
@@ -51,7 +53,6 @@
       transform: rotate(180deg);
     }
 
-    /* Cụm hoa góc trên bên phải */
     .flower-tr {
       top: -15px;
       right: -15px;
@@ -59,7 +60,6 @@
       transform: scaleX(-1);
     }
 
-    /* Cụm hoa góc dưới bên trái */
     .flower-bl {
       bottom: -15px;
       left: -15px;
@@ -67,7 +67,7 @@
       transform: scaleY(-1);
     }
 
-    /* Dải hạt lấp lánh ánh kim */
+    /* Bụi kim tuyến nền */
     .sparkle-bg {
       position: fixed;
       top: 0;
@@ -93,7 +93,7 @@
       100% { opacity: 0.85; transform: scale(1.02); }
     }
 
-    /* Cánh hoa & icon rơi tự do */
+    /* Cánh hoa rơi */
     .petal {
       position: fixed;
       top: -25px;
@@ -119,12 +119,12 @@
       z-index: 999;
     }
 
-    /* Khung thẻ chính - Kính mờ cao cấp */
+    /* Khung thẻ chính (Glassmorphism) */
     .card {
-      background: rgba(255, 255, 255, 0.88);
+      background: rgba(255, 255, 255, 0.9);
       border-radius: 28px;
       padding: 32px 24px;
-      max-width: 450px;
+      max-width: 460px;
       width: 100%;
       text-align: center;
       box-shadow: 
@@ -163,7 +163,6 @@
       margin-bottom: 18px;
     }
 
-    /* Ô nhập tên người nhận */
     .input-box {
       margin-bottom: 16px;
       text-align: left;
@@ -194,7 +193,7 @@
       box-shadow: 0 0 12px rgba(233, 30, 99, 0.22);
     }
 
-    /* Hộp quà tương tác */
+    /* Hộp quà nảy */
     .gift-wrap {
       margin: 6px 0 14px 0;
     }
@@ -224,16 +223,17 @@
 
     /* Khung hiển thị lời chúc */
     .message-box {
-      background: rgba(255, 248, 249, 0.9);
+      background: rgba(255, 248, 249, 0.92);
       border: 1.5px dashed #f48fb1;
       border-radius: 18px;
-      padding: 18px 16px;
-      min-height: 120px;
+      padding: 20px 16px;
+      min-height: 135px;
       display: flex;
       flex-direction: column;
       justify-content: center;
       align-items: center;
       margin-bottom: 20px;
+      position: relative;
     }
     .recipient-tag {
       display: inline-block;
@@ -243,14 +243,25 @@
       background: #fce4ec;
       padding: 3px 12px;
       border-radius: 10px;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
+    
+    /* Vùng hiển thị chữ chúc mừng (font sẽ thay đổi ngẫu nhiên tại đây) */
     .wish-text {
       color: #222;
-      font-size: 15.5px;
+      font-size: 17px;
       line-height: 1.6;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      font-family: 'Quicksand', sans-serif;
+    }
+
+    .font-badge {
+      position: absolute;
+      bottom: 6px;
+      right: 12px;
+      font-size: 10.5px;
+      color: #b0bec5;
       font-weight: 600;
-      transition: opacity 0.2s ease;
     }
 
     /* Nút bấm hành động */
@@ -317,29 +328,22 @@
 </head>
 <body>
 
-  <!-- Bụi sáng kim tuyến -->
   <div class="sparkle-bg"></div>
 
-  <!-- Cụm hoa SVG trang trí quanh 4 góc -->
-  <!-- Góc trên trái -->
+  <!-- SVG cụm hoa 4 góc màn hình -->
   <svg class="flower-frame flower-tl" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <!-- Lá xanh -->
     <path d="M40 120 C10 80, 50 10, 100 30 C70 70, 80 110, 40 120 Z" fill="#81c784" opacity="0.85"/>
     <path d="M120 40 C80 10, 10 50, 30 100 C70 70, 110 80, 120 40 Z" fill="#66bb6a" opacity="0.9"/>
-    <!-- Hoa hồng lớn góc trái -->
     <circle cx="85" cy="85" r="65" fill="#f48fb1" opacity="0.6"/>
     <circle cx="85" cy="85" r="50" fill="#f06292" opacity="0.8"/>
     <circle cx="85" cy="85" r="35" fill="#e91e63"/>
     <circle cx="85" cy="85" r="18" fill="#c2185b"/>
-    <!-- Hoa tulip đỏ -->
     <path d="M170 35 C150 5, 200 5, 180 35 C210 20, 200 65, 175 70 C150 65, 140 20, 170 35 Z" fill="#e53935" opacity="0.9"/>
     <path d="M35 170 C5 150, 5 200, 35 180 C20 210, 65 200, 70 175 C65 150, 20 140, 35 170 Z" fill="#ff4081" opacity="0.85"/>
-    <!-- Nhành hoa nhỏ -->
     <circle cx="155" cy="115" r="14" fill="#ff80ab"/>
     <circle cx="115" cy="155" r="14" fill="#ff80ab"/>
   </svg>
 
-  <!-- Góc dưới phải -->
   <svg class="flower-frame flower-br" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M40 120 C10 80, 50 10, 100 30 C70 70, 80 110, 40 120 Z" fill="#81c784" opacity="0.85"/>
     <path d="M120 40 C80 10, 10 50, 30 100 C70 70, 110 80, 120 40 Z" fill="#66bb6a" opacity="0.9"/>
@@ -351,7 +355,6 @@
     <circle cx="160" cy="120" r="16" fill="#ff4081"/>
   </svg>
 
-  <!-- Góc trên phải -->
   <svg class="flower-frame flower-tr" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M30 90 C10 60, 40 10, 80 20 C50 50, 60 80, 30 90 Z" fill="#81c784" opacity="0.8"/>
     <circle cx="65" cy="65" r="45" fill="#f8bbd0" opacity="0.7"/>
@@ -359,7 +362,6 @@
     <circle cx="65" cy="65" r="16" fill="#c2185b"/>
   </svg>
 
-  <!-- Góc dưới trái -->
   <svg class="flower-frame flower-bl" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path d="M30 90 C10 60, 40 10, 80 20 C50 50, 60 80, 30 90 Z" fill="#a5d6a7" opacity="0.8"/>
     <circle cx="65" cy="65" r="45" fill="#f8bbd0" opacity="0.7"/>
@@ -369,7 +371,6 @@
 
   <canvas id="confettiCanvas"></canvas>
 
-  <!-- Khung thiệp tương tác chính -->
   <div class="card">
     <div id="toast" class="toast">✨ Đã sao chép lời chúc!</div>
     <span class="badge">✦ 20/10 Yêu Thương ✦</span>
@@ -396,6 +397,7 @@
     <div class="message-box">
       <span id="recipientTag" class="recipient-tag">💌 Gửi tặng: Bạn</span>
       <p id="wish" class="wish-text">Nhấn nút bên dưới để rút lời chúc ngẫu nhiên dành riêng cho người ấy!</p>
+      <span id="fontBadge" class="font-badge"></span>
     </div>
 
     <div class="actions">
@@ -405,6 +407,16 @@
   </div>
 
   <script>
+    // Danh sách các bộ font chữ nghệ thuật tiếng Việt
+    const fontStyles = [
+      { name: "Dancing Script", family: "'Dancing Script', cursive", size: "20px", weight: "700" },
+      { name: "Pacifico", family: "'Pacifico', cursive", size: "17px", weight: "400" },
+      { name: "Playfair Display", family: "'Playfair Display', serif", size: "17px", weight: "600", style: "italic" },
+      { name: "Caveat", family: "'Caveat', cursive", size: "22px", weight: "700" },
+      { name: "Comfortaa", family: "'Comfortaa', cursive", size: "15.5px", weight: "700" },
+      { name: "Be Vietnam Pro", family: "'Be Vietnam Pro', sans-serif", size: "15.5px", weight: "600" }
+    ];
+
     const wishList = [
       "Nhân ngày 20/10, chúc {name} luôn rạng rỡ như ánh ban mai, ngập tràn niềm vui và nhận được thật nhiều tình cảm ấm áp! 🌸",
       "Chúc {name} một ngày 20/10 trọn vẹn: Tiền vào ào ào, việc nhẹ lương cao, ăn hoài không béo và lúc nào cũng xinh đẹp! 💖",
@@ -416,7 +428,8 @@
       "Gửi tới {name} ngàn đóa hoa và những lời chúc tốt đẹp nhất: Mong {name} luôn được nâng niu, trân trọng mỗi ngày! 🎁"
     ];
 
-    let lastIndex = -1;
+    let lastWishIndex = -1;
+    let lastFontIndex = -1;
     let currentRawWish = "";
 
     function getName() {
@@ -427,6 +440,29 @@
 
     function formatText(template, name) {
       return template.split("{name}").join(name);
+    }
+
+    function applyRandomFont() {
+      const wishElem = document.getElementById('wish');
+      const fontBadge = document.getElementById('fontBadge');
+      
+      let fIndex;
+      do {
+        fIndex = Math.floor(Math.random() * fontStyles.length);
+      } while (fIndex === lastFontIndex && fontStyles.length > 1);
+
+      lastFontIndex = fIndex;
+      const font = fontStyles[fIndex];
+
+      // Áp dụng font ngẫu nhiên
+      wishElem.style.fontFamily = font.family;
+      wishElem.style.fontSize = font.size;
+      wishElem.style.fontWeight = font.weight;
+      wishElem.style.fontStyle = font.style || "normal";
+      
+      if (fontBadge) {
+        fontBadge.innerText = font.name;
+      }
     }
 
     function updateRecipient() {
@@ -491,7 +527,7 @@
     }
     animateConfetti();
 
-    // Rút quẻ
+    // Rút quẻ ngẫu nhiên kèm đổi font
     function drawWish() {
       const gift = document.getElementById('gift');
       const wishElem = document.getElementById('wish');
@@ -501,20 +537,26 @@
       gift.classList.add('shake');
 
       wishElem.style.opacity = '0';
+      wishElem.style.transform = 'scale(0.96)';
 
       setTimeout(() => {
         let index;
         do {
           index = Math.floor(Math.random() * wishList.length);
-        } while (index === lastIndex && wishList.length > 1);
+        } while (index === lastWishIndex && wishList.length > 1);
 
-        lastIndex = index;
+        lastWishIndex = index;
         currentRawWish = wishList[index];
 
         const name = getName();
         wishElem.innerText = formatText(currentRawWish, name);
         document.getElementById('recipientTag').innerText = "💌 Gửi tặng: " + name;
+        
+        // Đổi ngẫu nhiên font chữ
+        applyRandomFont();
+
         wishElem.style.opacity = '1';
+        wishElem.style.transform = 'scale(1)';
 
         fireConfetti();
       }, 180);
@@ -542,7 +584,6 @@
       setTimeout(() => toast.classList.remove('show'), 2000);
     }
 
-    // Nhấn Enter để bốc quẻ
     document.getElementById('recipientInput').addEventListener('keydown', function(e) {
       if (e.key === 'Enter') {
         drawWish();
